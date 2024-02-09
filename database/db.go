@@ -36,7 +36,7 @@ func (db *DB) CloseConnection() {
 
 func (db *DB) CreatePost(post entity.Post) (*entity.Post, error) {
 	var createdPost *entity.Post
-	result := db.Conn.Raw(`INSERT INTO posts (id,title,content,created_at,updated_at) VALUES(?,?,?,?,?)`, post.ID, post.Title, post.Content, post.CreatedAt, post.UpdatedAt).Scan(&createdPost)
+	result := db.Conn.Raw(`INSERT INTO posts (id,title,content,created_at,updated_at) VALUES(?,?,?,?,?) retuning *`, post.ID, post.Title, post.Content, post.CreatedAt, post.UpdatedAt).Scan(&createdPost)
 	if result.Error != nil {
 		if strings.Contains(result.Error.Error(), "duplicate") {
 			return nil, errors.New(constants.DUPLICATE_ERROR)
@@ -54,7 +54,7 @@ func (db *DB) GetPosts(postId string) ([]entity.Post, error) {
 	if postId == "" {
 		result = db.Conn.Raw(`select * from posts`).Scan(&posts)
 	} else {
-		result = db.Conn.Raw(`select * from posts where post_id = ?`, postId).Scan(&posts)
+		result = db.Conn.Raw(`select * from posts where id = ?`, postId).Scan(&posts)
 	}
 
 	if result.Error != nil {
