@@ -1,3 +1,5 @@
+CREATE DATABASE blogger
+
 CREATE TABLE public.posts
 (
     id character varying(36),

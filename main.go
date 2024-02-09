@@ -2,9 +2,11 @@ package main
 
 import (
 	"blogger/database"
+	"blogger/handlers"
 	"log"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -28,5 +30,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
+	//defer closing database connection
+	defer conn.CloseConnection()
+
+	service := handlers.NewService(conn)
+
+	router := gin.Default()
+	postsRouter := router.Group("/post")
+
+	postsRouter.POST("/", service.CreatePost)
+	postsRouter.GET("/", service.GetAllPosts)
+	// postsRouter.GET("/:post_id", service.GetPostByID)
+
+	router.Run()
 
 }
