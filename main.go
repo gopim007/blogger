@@ -42,6 +42,8 @@ func main() {
 	postsRouter.POST("/", service.CreatePost)
 	postsRouter.GET("/", service.GetAllPosts)
 	postsRouter.GET("/:post_id", service.GetPostByID)
+	postsRouter.PUT("/:post_id", service.UpdatePostByID)
+	postsRouter.DELETE("/:post_id", service.DeletePostByID)
 
 	router.Run()
 
