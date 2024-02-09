@@ -5,4 +5,5 @@ const (
 	SOMETHING_WENT_WRONG      = "something went wrong"
 	DUPLICATE_ERROR           = "data already exists"
 	INVALID_DATA              = "invalid data"
+	RECORD_NOT_FOUND          = "record not found"
 )

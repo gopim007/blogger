@@ -62,3 +62,21 @@ func (db *DB) GetPosts(postId string) ([]entity.Post, error) {
 	}
 	return posts, nil
 }
+
+func (db *DB) UpdatePostByID(post entity.Post) (*entity.Post, error) {
+	var reultPost entity.Post
+	result := db.Conn.Raw(`update posts set title = ?, content = ?, updated_at = ? where post_id = ?`, post.Title, post.Content, post.UpdatedAt).Scan(&reultPost)
+	if result.Error != nil {
+		return nil, errors.New(constants.SOMETHING_WENT_WRONG)
+	}
+	return &reultPost, nil
+}
+
+func (db *DB) DeletePostByID(postId string) (*entity.Post, error) {
+	var deletedPost entity.Post
+	result := db.Conn.Raw(`delete from posts where post_id = ?`, postId).Scan(&deletedPost)
+	if result.Error != nil {
+		return nil, errors.New(constants.SOMETHING_WENT_WRONG)
+	}
+	return &deletedPost, nil
+}

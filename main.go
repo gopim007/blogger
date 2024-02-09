@@ -41,7 +41,7 @@ func main() {
 
 	postsRouter.POST("/", service.CreatePost)
 	postsRouter.GET("/", service.GetAllPosts)
-	// postsRouter.GET("/:post_id", service.GetPostByID)
+	postsRouter.GET("/:post_id", service.GetPostByID)
 
 	router.Run()
 
