@@ -31,7 +31,7 @@ func (serv *Service) CreatePost(c *gin.Context) {
 
 	post.ID = uuid.New().String()
 	post.CreatedAt = datetime.GetCurrentTimestampAsInt()
-	err := post.Validate()
+	err := post.Validate(constants.CREATE)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
@@ -100,7 +100,7 @@ func (serv *Service) UpdatePostByID(c *gin.Context) {
 	}
 
 	post.UpdatedAt = datetime.GetCurrentTimestampAsInt()
-	err := post.Validate()
+	err := post.Validate(constants.CREATE)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return

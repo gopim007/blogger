@@ -7,3 +7,8 @@ const (
 	INVALID_DATA              = "invalid data"
 	RECORD_NOT_FOUND          = "record not found"
 )
+
+const (
+	UPDATE = "update"
+	CREATE = "create"
+)
