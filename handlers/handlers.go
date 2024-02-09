@@ -15,12 +15,14 @@ type Service struct {
 	Repo *database.DB
 }
 
+// NewService - initialising service
 func NewService(repo *database.DB) *Service {
 	return &Service{
 		Repo: repo,
 	}
 }
 
+// CreatePost - create post service
 func (serv *Service) CreatePost(c *gin.Context) {
 	var post entity.Post
 
@@ -47,6 +49,7 @@ func (serv *Service) CreatePost(c *gin.Context) {
 
 }
 
+// GetAllPosts- get all posts service
 func (serv *Service) GetAllPosts(c *gin.Context) {
 	posts, err := serv.Repo.GetPosts("")
 	if err != nil {
@@ -57,6 +60,7 @@ func (serv *Service) GetAllPosts(c *gin.Context) {
 
 }
 
+// GetPostByID - get posts by id service
 func (serv *Service) GetPostByID(c *gin.Context) {
 	postId := c.Param("post_id")
 	if postId == "" {
@@ -79,6 +83,7 @@ func (serv *Service) GetPostByID(c *gin.Context) {
 
 }
 
+// UpdatePostByID - update posts by id service
 func (serv *Service) UpdatePostByID(c *gin.Context) {
 
 	var post entity.Post
@@ -100,7 +105,7 @@ func (serv *Service) UpdatePostByID(c *gin.Context) {
 	}
 
 	post.UpdatedAt = datetime.GetCurrentTimestampAsInt()
-	err := post.Validate(constants.CREATE)
+	err := post.Validate(constants.UPDATE)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
@@ -116,6 +121,7 @@ func (serv *Service) UpdatePostByID(c *gin.Context) {
 
 }
 
+// DeletePostByID - delete posts by id service
 func (serv *Service) DeletePostByID(c *gin.Context) {
 	postId := c.Param("post_id")
 

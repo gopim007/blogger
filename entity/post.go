@@ -13,6 +13,7 @@ type Post struct {
 	UpdatedAt int    `json:"updated_at" gorm:"updated_at"`
 }
 
+// Validate - method to validate the entity
 func (post Post) Validate(scope string) error {
 	switch scope {
 	default:
